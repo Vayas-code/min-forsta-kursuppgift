@@ -5,7 +5,7 @@
 
 
 
-**Introduktion:** Detta är en labbmiljö som går igenom virituell labbmiljö, felsökning och sedan dokumenterars i Git med hjälp av Markdown format.
+**Introduktion:** Nu går vi igenom virituell labbmiljö, felsökning och sedan dokumenterars i Git med hjälp av Markdown format.
 
 ---
 
@@ -77,3 +77,59 @@ Kontrollerade även ```sudo ls -l``` för att se behörigeter för filen vi skap
 
 ## AI-logg och utvärdering ##  
 
+ *Jag promptade följande*  
+ **Hejsan. Jag har en fråga jag gärna vill att du förklarar för mig steg för steg. Hur kommer det sig att efter jag skapat min grupp i linux teminalen, att jag bara behöver skriva chmod 750 sedan min mappväg. Hur kommer det sig att jag inte behöver skriva mitt gruppnamn i skripten?**  
+
+ *Jag fick detta svaret av AI*  
+
+ >Detta beror på två grundläggande funktioner i Linux: processens ägarskap och ägarstrukturen för filer/mappar.
+
+>När du kör ett kommando eller skript i terminalen kopplar Linux automatiskt dina användarrättigheter och dina grupper till det kommandot.
+
+>Processens ägarskap (Vem kör kommandot?)
+>När du är inloggad i terminalen körs dina kommandon under din användare och din primära/sekundära grupp.
+
+>Din användare har en primärgrupp: När du skapar en fil eller mapp tilldelas den automatiskt din användare som ägare och din nuvarande primära grupp som gruppägare.
+
+>Kommandon ärver din identitet: När du kör chmod behöver kommandot inte fråga vem du är eller vilken grupp du tillhör – operativsystemet skickar automatiskt med dina användar- och grupp-ID:n till processen.
+
+>Hur chmod 750 fungerar steg för steg
+Rättighetstalet 750 bestämmer rättigheter för tre separata nivåer i exakt denna ordning: Ägare (User), Grupp (Group) och Andra (Others).
+
+>Plaintext
+  7        5        0
+  │        │        │
+  ▼        ▼        ▼
+ Ägare   Grupp    Andra
+(rwx)    (r-x)    (---)
+När du kör chmod 750 /din/mappväg händer följande:
+
+>Identifiering: Linux kollar mappen du angav och ser vilken användare och grupp som står som ägare på den.
+
+>Tilldelning av siffervärden:
+
+>7 (Ägare): Sätter rwx (läsa, skriva, exekvera/öppna) för användaren som äger mappen.
+
+>5 (Grupp): Sätter r-x (läsa och exekvera/öppna, men inte skriva/ändra) för gruppen som äger mappen.
+
+>0 (Andra): Sätter --- (inga rättigheter alls) för alla andra användare på systemet.
+
+>Verkställande: chmod ändrar rättighetsbitarna på den specifika mappen utan att behöva ändra vilken grupp som äger den.
+
+>Varför behövs inte gruppnamnet?
+Du behöver inte ange gruppnamnet eftersom chmod med tre siffror endast ändrar rättighetsnivåerna på den grupp som redan är tilldelad mappen. Kommandot bryr sig inte om vad gruppen heter, utan bara om rättighetsbitarna för den befintliga gruppägaren.
+
+>Om du vill ändra vilken grupp som äger mappen använder du istället kommandot chgrp eller chown:
+
+>För att ändra gruppägare: chgrp mittgruppnamn /din/mappväg
+
+>För att ändra både ägare och grupp samtidigt: chown minanvändare:mittgruppnamn /din/mappväg
+
+>När rätt grupp väl står som ägare på mappen behöver du alltså bara använda chmod 750 för att styra vad medlemmarna i den gruppen får göra  
+--- 
+***Kritisk utvärdering av svaret AI gav mig***  
+ - Svaret AI gav mig är korrekt ur synpunkten hur chmod och grupper hanteras och skrivs.  
+ - Jag upplever inga konstiga hallunicationer eller felaktig svar av AI.  
+ - Säkerheten följs bra då jag inte skrev med mappnamnet utan hänvisade till "mappnamn" vilket gör att AI förstår vad jag menar men utan att jag behöver skriva in vad min mapp egentligen heter.  
+
+*AI ger mig ett djupgående svar steg för steg hur chmod och grupper hanteras, hur det är uppbyggt och hur man på ett korrekt sätt skriver skriptet i terminalen. Den ger mig grundlig förklaring på vad varje del i skriptet betyder och varför det är viktigt samtidigt som den ger en tydlig kod där jag själv skriver in mitt gruppnamn/min mappväg. Med detta så ger den mig en bra förståelse på grunden till hanteringen och den får inte tillgång till några namn på mina mappar vilket förstärker säkerhetet för mig.*  
