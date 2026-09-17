@@ -69,5 +69,11 @@ Kontrollerade även ```sudo ls -l``` för att se behörigeter för filen vi skap
 ### Nedan ser vi en skärmdump av Windows ping och ipconf ### 
 ![Deta är skärmdumpen från när den pingade Linux-datorn samt Windows configuration](Ping.png)  
 
+## Git och Versionshantering ## 
+>Ändringshistoriken
+![Ändringshistoriken](image.png)
+
+[Länk till Git-Repo](https://github.com/Vayas-code/min-forsta-kursuppgift)  
+
 ## AI-logg och utvärdering ##  
 
